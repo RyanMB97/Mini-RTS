@@ -1,6 +1,6 @@
 public class EntityBehaviors {
 
-	public void viewSurroundingEntities(Entity currentEntity, Entity[][] allEntities) {
+	public static void viewSurroundingEntities(Entity currentEntity, Entity[][] allEntities) {
 		// 0 = top, 1 = top-right, 2 = right, continuing clockwise to 7 (top-left)
 		Entity[] surroundingEntities = new Entity[8];
 		int curX = currentEntity.tileX;
@@ -29,7 +29,7 @@ public class EntityBehaviors {
 		currentEntity.surEnt = surroundingEntities;
 	}
 
-	public int entitiesOfOppositeID(Entity currentEntity, Entity[] surroundingEntities) {
+	public static int entitiesOfOppositeID(Entity currentEntity, Entity[] surroundingEntities) {
 		int surFoes = 0;
 
 		for (Entity e : surroundingEntities) {

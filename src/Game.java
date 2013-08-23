@@ -116,6 +116,10 @@ public class Game extends Canvas implements Runnable {
 		frame.setTitle("FPS: " + FPS);
 
 		for (Entity e : oneDimensionAllEntities) {
+			EntityBehaviors.viewSurroundingEntities(e, allEntities);
+		}
+
+		for (Entity e : oneDimensionAllEntities) {
 			e.tick();
 		}
 	}

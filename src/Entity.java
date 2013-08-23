@@ -26,7 +26,6 @@ public class Entity extends EntityBehaviors {
 	}
 
 	public void tick() {
-		viewSurroundingEntities(this, Game.allEntities);
 		if (entitiesOfOppositeID(this, surEnt) >= thresholdForConversion) {
 			if (ID == 0) {
 				ID = 1;
