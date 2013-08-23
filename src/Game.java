@@ -14,7 +14,10 @@ public class Game extends Canvas implements Runnable {
 	// Classes
 	public static Entity[][] allEntities;
 	public static Entity[] oneDimensionAllEntities;
-	public static int entityWidth, entityHeight;
+
+	// Variables to be used for the class references
+	public static int maxWidthOfEntities = 80;
+	public static int maxHeightOfEntities = 60;
 
 	// Main Components
 	public static final int WIDTH = 640, HEIGHT = 480;
@@ -30,7 +33,6 @@ public class Game extends Canvas implements Runnable {
 	double delta = 0D;
 
 	// Misc
-	boolean entitiesCreated = false;
 
 	public static void main(String[] args) {
 		new Game().start();
@@ -75,25 +77,21 @@ public class Game extends Canvas implements Runnable {
 	private void createEntities() {
 		int i = 0;
 
-		for (int x = 0; x < this.getWidth() + Entity.width; x += Entity.width) {
-			for (int y = 0; y < this.getHeight() + Entity.height; y += Entity.height) {
+		for (int x = 0; x < maxWidthOfEntities; x++) {
+			for (int y = 0; y < maxHeightOfEntities; y++) {
 				int randomID = new Random().nextInt(2);
 
-				Entity e = new Entity(x, y, randomID);
-				allEntities[x / Entity.width][y / Entity.height] = e;
+				Entity e = new Entity(x * 8, y * 8, randomID);
+				allEntities[x][y] = e;
 				oneDimensionAllEntities[i] = e;
 
 				i++;
-				entityHeight = y / Entity.height;
 			}
-			entityWidth = x / Entity.width;
 		}
-
-		entitiesCreated = true;
 	}
 
 	private void init() {
-		frame = new JFrame("Test FPS: " + FPS);
+		frame = new JFrame("FPS: " + FPS);
 		setMinimumSize(gameDim);
 		setMaximumSize(gameDim);
 		setPreferredSize(gameDim);
@@ -108,8 +106,8 @@ public class Game extends Canvas implements Runnable {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 
-		allEntities = new Entity[(this.getWidth() / Entity.width) + 8][(this.getHeight() / Entity.height) + 8];
-		oneDimensionAllEntities = new Entity[10000];
+		allEntities = new Entity[maxWidthOfEntities + 2][maxHeightOfEntities + 2];
+		oneDimensionAllEntities = new Entity[maxWidthOfEntities * maxHeightOfEntities];
 
 		requestFocus();
 	}
@@ -117,11 +115,8 @@ public class Game extends Canvas implements Runnable {
 	public void tick() {
 		frame.setTitle("FPS: " + FPS);
 
-		if (entitiesCreated) {
-			for (Entity e : oneDimensionAllEntities) {
-				if (e != null)
-					e.tick();
-			}
+		for (Entity e : oneDimensionAllEntities) {
+			e.tick();
 		}
 	}
 
@@ -137,11 +132,8 @@ public class Game extends Canvas implements Runnable {
 
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 
-		if (entitiesCreated) {
-			for (Entity e : oneDimensionAllEntities) {
-				if (e != null)
-					e.render(g);
-			}
+		for (Entity e : oneDimensionAllEntities) {
+			e.render(g);
 		}
 
 		g.dispose();

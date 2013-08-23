@@ -6,15 +6,15 @@ public class Entity extends EntityBehaviors {
 
 	// Positioning
 	int x, y, ID;
-	public static int width = 16, height = 16;
+	public static int width = 8, height = 8;
 	int tileX, tileY;
 
 	// Other information
-	public static int thresholdForConversion = 3;
+	public static int thresholdForConversion = 4;
 
 	// Colors of the entities
 	Color IDZero = Color.BLACK;
-	Color IDOne = Color.BLUE;
+	Color IDOne = Color.RED;
 
 	public Entity(int x, int y, int ID) {
 		this.x = x;
@@ -26,7 +26,7 @@ public class Entity extends EntityBehaviors {
 	}
 
 	public void tick() {
-		surEnt = viewSurroundingEntities(this, Game.allEntities);
+		viewSurroundingEntities(this, Game.allEntities);
 		if (entitiesOfOppositeID(this, surEnt) >= thresholdForConversion) {
 			if (ID == 0) {
 				ID = 1;
